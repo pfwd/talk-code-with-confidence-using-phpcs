@@ -11,10 +11,10 @@ class:
 
 ---
 
-1. What does code confidence mean to me
+1. What does code confidence mean to me?
 2. What are coding conventions?
-3. How do we install/run/configure PHPCS
-4. How to increase code confidence using PHPCS
+3. How do we install/run/configure PHPCS?
+4. How to increase code confidence using PHPCS?
 
 ---
 
@@ -45,7 +45,7 @@ class:
 
 ---
 
-#  1# New projects
+#  1# New / green field projects
 
 <!--
 - Start from scratch, no code (yet)
@@ -58,7 +58,7 @@ class:
 
 ---
 
-# 2# Legacy projects
+# 2# Legacy / brown field projects
 
 <!--
 - It could be a spaghetti code base
@@ -77,7 +77,7 @@ class:
 
 ---
 
-# 3# Migrations/rebuilds
+# 3# Migrations / rebuilds
 
 <!--
 - Data integrity could be poor
@@ -99,7 +99,7 @@ Start clean, continue clean whilst building up confidence with the code
 
 <!--
 - Be aware of known style violations before the first deployment
-- Gain visual feedback on what parts of code needs adjusting before merging.
+- Gain visual feedback on what parts of code need adjusting before the first deployment.
 - Spot potential future gotchas in coding conventions.
 - Create a CI that reports code violations quickly and blocks the pipeline.
 - Ensure the team follows the same set of rules.
@@ -112,11 +112,10 @@ Start clean, continue clean whilst building up confidence with the code
 Quickly identify existing style violations whilst building up confidence with the code
 
 <!--
-- Be aware of known issues before deployment
-- Clean up existing code smells
-- Enforcing coding style requirements and checks during continual integration.
-- Standardize the codebase
-- Make the devs happy
+- Be aware of known issues and violations in the project.
+- Prioritise existing code smells
+- Reduce team arguments on coding conventions. 
+- Make it easier for future developers to know which conventions are required.
 -->
 
 ---
@@ -128,7 +127,8 @@ Ensure the migration from one code base to another is as smooth as possible.
 <!--
 - Ensure old code standards can be easily adapted.
 - Remove old code styles (Either defined or implied)
-- Minimise the amount of pollution that the old code base presents. 
+- Minimise the amount of cross pollination of styles.
+- Unifi the coding conventions.
 -->
 
 ---
@@ -142,9 +142,21 @@ Ensure the migration from one code base to another is as smooth as possible.
 <!--
 - PHPCS is just one of many tools
 - Mess detection
+- Compatibility checks
 - Static analysis
-- Unit tests
+- Tests (Unit/Integration/Acceptance)
 -->
+---
+
+# What about PHP Coding Style Fixer (PHP CS)
+
+- Fixer first approach (Great for automation)
+- Supported by Symfony
+- Different output style
+- Cannot ignore individual lines of code
+- Configured by PHP
+- Has hundreds rules
+- Only checks PHP
 
 ---
 
@@ -161,8 +173,8 @@ Ensure the migration from one code base to another is as smooth as possible.
 
 # What does that mean?
 
-- It forces new code to adhere to a given set of rules (sniffs).
-- It makes the code easy to read.
+- It forces code to adhere to a given set of rules (sniffs).
+- It makes the code easier to read.
 - It removes ambiguity of which convention is allowed.
 - It reduces noise and debate in pull requests.
 
@@ -171,34 +183,128 @@ Ensure the migration from one code base to another is as smooth as possible.
 
 ## We read code more than we write code
 
+## Switching between conventions is a brain drain
+
 <!--
 When we write code we read the surrounding code, the calling code and the architecture.
 -->
 
----
-# What's the point?
-
-## Switching between conventions is a brain drain
-
-<!--
-It's like jumping between different languages or dialects. If you're having a conversation with someone and you don't understand them you may ask them to repeat themselves.  In code you will need to re-read the code.
--->
-
----
-# What's the point?
-
-## Code is complicated enough. Don't confuse the reader any more than needed.
-
-<!--
-Help the coders that come after you by following the conversions defined by the coders before you.
--->
 ---
 
 # #3
 ## PHP_CodeSniffer has entered the chat
 
 - [https://github.com/squizlabs/PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer)
-- Is free and open source
+- PHP >=5.4.0
+- Uses XML for config
+- Multiple reporting outputs
+---
+
+# Install via Composer
+
+# Composer
+
+```bash
+$ composer global require "squizlabs/php_codesniffer=*"
+```
+
+---
+
+# Other ways to install
+
+- Pear
+- Curl
+- Wget
+- Git clone
+
+See [github.com/squizlabs/PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer)
+
+---
+
+# Two tools
+
+- phpcs
+- phpcbf
+
+---
+
+# What is phpcs?
+
+- Tokenizer for PHP, JavaScript and CSS
+
+---
+
+# What is phpcbf?
+
+- Automatic fixer
+
+---
+
+# Your first run
+
+```bash
+$ phpcs ~/path/to/file.php
+```
+
+```bash
+$ phpcs ~/path/to/directory
+```
+
+---
+
+# When things go well
+
+```bash
+root@3aff108bdba0:/var/www/html# bin/phpcs src/MyController.php
+root@3aff108bdba0:/var/www/html#
+```
+
+---
+
+# Catching errors
+```
+root@3aff108bdba0:/var/www/html# bin/phpcs src/Controller/ConnectController.php
+
+FILE: src/Controller/ConnectController.php
+-----------------------------------------------------------------------
+FOUND 1 ERROR AFFECTING 1 LINE
+-----------------------------------------------------------------------
+ 24 | ERROR | [x] Expected 0 spaces after opening parenthesis; 1 found
+-----------------------------------------------------------------------
+PHPCBF CAN FIX THE 1 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+-----------------------------------------------------------------------
+
+Time: 596ms; Memory: 10MB
+```
+
+---
+
+# The fix
+
+```bash
+root@3aff108bdba0:/var/www/html# bin/phpcbf src/Controller/ConnectController.php
+
+PHPCBF RESULT SUMMARY
+----------------------------------------------------------------------
+FILE                                                  FIXED  REMAINING
+----------------------------------------------------------------------
+src/Controller/ConnectController.php                  1      0
+----------------------------------------------------------------------
+A TOTAL OF 1 ERROR WERE FIXED IN 1 FILE
+----------------------------------------------------------------------
+
+Time: 611ms; Memory: 10MB
+```
+
+
+<!--
+- Updating the return type to allow for nullable values (:?string)
+-->
+
+--- 
+
+# What's a sniff?
+
 
 ---
 
