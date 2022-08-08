@@ -37,7 +37,7 @@ class:
 ---
 
 # #1
-## What does code confidence mean to me
+## What does code confidence mean to me?
 
 ---
 
@@ -147,13 +147,13 @@ Ensure the migration from one code base to another is as smooth as possible.
 - Different output style
 - Cannot ignore individual lines of code
 - Configured by PHP
-- Has hundreds rules
+- Has hundreds of rules
 - Only checks PHP
 
 ---
 
 # #2
-## What are Code Conventions
+## What are Code Conventions?
 
 ---
 
@@ -443,7 +443,7 @@ Generator could be markdown
 # Configuration options
 
 ```
-bin/phpcs -p -v --extensions=php,inc -d memeory_limit=1024 --parallel=8 src/Controller
+bin/phpcs -p -v --extensions=php,inc -d memory_limit=1024 --parallel=8 src/Controller
 ```
 
 ```
@@ -464,7 +464,7 @@ Processing CourseController.php [loaded from cache]... DONE in 2ms (0 errors, 0 
 -->
 ---
 ```
-bin/phpcs -p -v --extensions=php,inc -d memeory_limit=1024M --parallel=8 src/Controller
+bin/phpcs -p -v --extensions=php,inc -d memory_limit=1024M --parallel=8 src/Controller
 ```
 
 ```xml
@@ -554,7 +554,7 @@ $ make tests
 $ composer test
 ```
 ---
-# Use a CI
+# Use Continual Integration (CI)
 <!--
 - Enforce that no code can be merged into the main branches unless the CI fully passes
 -->
@@ -629,7 +629,7 @@ However lots of files/lines/sniffs have been ignored with no explanation
 How do you install PHPCS on a legacy project?
 
 ---
-1. Get the by in of the team
+1. Get the buy in of the team
 2. Choose the standards and run PHPCBF over the code base to fix quick wins
 3. Start to introduce new sniffs and re run PHPCBF over the codebase each time
 5. Put the code formatting changes in a separate branch/pr
