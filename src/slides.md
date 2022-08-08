@@ -1,8 +1,8 @@
 ---
 theme: uncover
+marp: true
+paginate: true
 class:
-- lead
-- invert
   size: 16:9
   footer: "Peter Fisher BSc MBCS [howtocodewell.net](https://howtocodewell.net) [@howToCodeWell](https://twitter.com/howtocodewell) [@pfwd](https://twitter.com/pfwd)"
 ---
@@ -51,9 +51,9 @@ class:
 - Start from scratch, no code (yet)
 - No architectural decisions have been made (yet)
 - No frameworks or library’s chosen (yet)
-- No bugs (yet)
-- No end users (yet)
-- Shopping list of new requirements
+- No Code styles have been chosen
+- List of requirements and timescales
+
 -->
 
 ---
@@ -61,18 +61,12 @@ class:
 # 2# Legacy / brown field projects
 
 <!--
-- It could be a spaghetti code base
+- It could have a mixture of code styles
 - It could have mixture of frameworks and library's
 - The code could be out of date
 - It could be using an older version of PHP
-- It could have incoming change requests
-- It could have poor technical documentation
-- There might be 0 tests
-- There could be lots of known bugs
-- There could be lots of unknown bugs
-- There could be many end users. Some might be complaining
-- There could be performance, security, and data integrity issues
-- You could have a low confidence that an upgrading or improving something will work
+- Team members who advocated a coding style may no longer be on the team
+- Low documentation
 -->
 
 ---
@@ -80,11 +74,9 @@ class:
 # 3# Migrations / rebuilds
 
 <!--
-- Data integrity could be poor
-- Existing user base
-- Downtime issues
-- There could be many reasons why a migration is needed
-- Workarounds
+- Migrating from one code style to another
+- Migrating from one framework to another
+- Migrating from versions which us different code conventions
 -->
 
 ---
@@ -95,15 +87,16 @@ class:
 
 # New projects
 
-Start clean, continue clean whilst building up confidence with the code
+Start clean, continue clean whilst building up confidence with the codebase
 
 <!--
 - Be aware of known style violations before the first deployment
 - Gain visual feedback on what parts of code need adjusting before the first deployment.
 - Spot potential future gotchas in coding conventions.
-- Create a CI that reports code violations quickly and blocks the pipeline.
+- Create a CI that reports code violations quickly and blocks the pipeline from going forward.
 - Ensure the team follows the same set of rules.
 - Move quickly whilst ensuring the team comply with a given set of agreed coding conventions.
+- Create a space for discussions about code conventions
 -->
 ---
 
@@ -128,7 +121,6 @@ Ensure the migration from one code base to another is as smooth as possible.
 - Ensure old code standards can be easily adapted.
 - Remove old code styles (Either defined or implied)
 - Minimise the amount of cross pollination of styles.
-- Unifi the coding conventions.
 -->
 
 ---
@@ -172,21 +164,23 @@ Ensure the migration from one code base to another is as smooth as possible.
 ---
 
 # What does that mean?
-
+<!--
 - It forces code to adhere to a given set of rules (sniffs).
 - It makes the code easier to read.
 - It removes ambiguity of which convention is allowed.
 - It reduces noise and debate in pull requests.
-
+-->
 ---
+
 # What's the point?
 
-## We read code more than we write code
-
-## Switching between conventions is a brain drain
-
 <!--
+We read code more than we write code.
+
 When we write code we read the surrounding code, the calling code and the architecture.
+
+Switching between conventions is a brain drain.
+
 -->
 
 ---
@@ -328,17 +322,17 @@ Time: 611ms; Memory: 10MB
 ```xml
 <?xml version="1.0" ?>
 <ruleset name="MyProject">
-  <rule ref="PS1" />
+  <rule ref="PSR1" />
 </ruleset>
 ```
 ---
 # Adding other rules
 
 ```xml
-<?xml version"1.0" ?>
+<?xml version="1.0" ?>
 <ruleset name="MyProject">
-  <rule ref="PS1" />
-  <rule ref="PS2" />
+  <rule ref="PSR1" />
+  <rule ref="PSR2" />
 </ruleset>
 ```
 ---
@@ -511,23 +505,31 @@ $xmlPackage['error_code'] = get_default_error_code_value();
 $xmlPackage->send();
 // phpcs:enable
 ```
+
 ---
-# Ignoring lines
+# Ignoring lines 1/3
 ```php
 // phpcs:ignore
 $foo = [1,2,3];
 bar($foo, false);
 ```
+<!-- Example shows PHPCS ignoring line below. -->
+---
+# Ignoring lines 1/2
 ```php
 $foo = [1,2,3]; // phpcs:ignore
 bar($foo, false);
 ```
+<!-- Example shows PHPCS ignoring the current line. -->
+---
+# Ignoring lines 1/3
 ```php
 // phpcs:ignore Squiz.Arrays.ArrayDeclaration.SingleLineNotAllowed
 $foo = [1,2,3];
 bar($foo, false);
 ```
-
+<!-- Example shows PHPCS ignoring sniff -->
+---
 
 # #4
 ## How to increase code confidence using PHPCS
@@ -541,6 +543,7 @@ bar($foo, false);
 
 PHPCS -> PHPStan -> PHPUnit
 
+<!-- Run PHPCS first as this will require automatic alterations to the code -->
 ---
 
 # One command to rule them all
@@ -568,9 +571,9 @@ $ composer test
 
 <!--
 - Do not ignore lines, files or disable sniffs unless you really have to.
-- Document why you are ignoring things
-
+- Document why you are ignoring things.
 -->
+
 ---
 
 # Recommendations for legacy projects
@@ -581,6 +584,15 @@ $ composer test
 - Get an agreement with the team as to which conventions to use/drop
 - If anything needs to be ignored then write a ticket and add the ticket reference into the comment.
 -->
+---
+
+# Example
+
+```php
+// phpcs:ignore Squiz.Arrays.ArrayDeclaration.SingleLineNotAllowed [PORT-123]
+$foo = [1,2,3];
+bar($foo, false);
+```
 
 ---
 
@@ -588,16 +600,20 @@ $ composer test
 
 ---
 
-# 1) PHPCS is already in use. Any ignored files or lines have been documented with a related ticket in the backlog
+# 1) PHPCS is already in use. 
+
+Any ignored files or lines have been documented with a related ticket in the backlog
 
 - High confidence level
 
 ---
-# 2) PHPCS is but lots of files/lines/sniffs have been ignored with no explanation
+# 2) PHPCS is installed
+However lots of files/lines/sniffs have been ignored with no explanation
 
 - Low confidence level
 
-How do you improve a legacy project?
+---
+# How do you improve a legacy project?
 <!--
 - Collate all the ignored files, lines and have a meeting with the team to discuss a way forward.
 - Can the ignored items be fixed and the rule be included
@@ -618,6 +634,37 @@ How do you install PHPCS on a legacy project?
 3. Start to introduce new sniffs and re run PHPCBF over the codebase each time
 5. Put the code formatting changes in a separate branch/pr
 6. Rinse and repeat
+
+---
+
+# PHPCS and Security
+
+```xml
+<rule ref="Security.BadFunctions.Asserts"/>
+<rule ref="Security.BadFunctions.Backticks"/>
+<rule ref="Security.BadFunctions.CallbackFunctions"/>
+<rule ref="Security.BadFunctions.CryptoFunctions"/>
+<rule ref="Security.BadFunctions.EasyRFI"/>
+<rule ref="Security.BadFunctions.EasyXSS"/>
+<rule ref="Security.CVE.20132110"/>
+<rule ref="Security.CVE.20134113"/>
+```
+
+[https://github.com/FloeDesignTechnologies/phpcs-security-audit](https://github.com/FloeDesignTechnologies/phpcs-security-audit)
+
+---
+
+# PHPCS and PHP Compatibility
+
+```xml
+<rule ref="PHPCompatibility"/>
+```
+
+```bash
+phpcs -p ./src --standard=vendor/phpcompatibility/php-compatibility/PHPCompatibility --runtime-set testVersion 8.0
+```
+
+[https://github.com/PHPCompatibility/PHPCompatibility](https://github.com/PHPCompatibility/PHPCompatibility)
 
 ---
 
