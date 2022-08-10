@@ -3,8 +3,10 @@ theme: uncover
 marp: true
 paginate: true
 class:
-  size: 16:9
-  footer: "Peter Fisher BSc MBCS [howtocodewell.net](https://howtocodewell.net) [@howToCodeWell](https://twitter.com/howtocodewell) [@pfwd](https://twitter.com/pfwd)"
+- lead
+- invert
+size: 16:9
+footer: "Peter Fisher BSc MBCS [howtocodewell.net](https://howtocodewell.net) [@howToCodeWell](https://twitter.com/howtocodewell) [@pfwd](https://twitter.com/pfwd)"
 ---
 
 # Code with confidence using PHPCS
@@ -125,7 +127,7 @@ Ensure the migration from one code base to another is as smooth as possible.
 
 ---
 
-# How do we get there
+# How do we get there?
 
 ---
 
@@ -140,14 +142,13 @@ Ensure the migration from one code base to another is as smooth as possible.
 -->
 ---
 
-# What about PHP Coding Style Fixer (PHP CS)
+# What about PHP Coding Style Fixer?
 
 - Fixer first approach (Great for automation)
 - Supported by Symfony
 - Different output style
 - Cannot ignore individual lines of code
 - Configured by PHP
-- Has hundreds of rules
 - Only checks PHP
 
 ---
@@ -184,8 +185,7 @@ Switching between conventions is a brain drain.
 
 ---
 
-# #3
-## PHP_CodeSniffer has entered the chat
+# #3 PHP_CodeSniffer
 
 - [https://github.com/squizlabs/PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer)
 - PHP >=5.4.0
@@ -397,7 +397,7 @@ Excludes the vendor directory
 -->
 ---
 
-# Excluding patterns from all rules
+# Excluding patterns
 ```xml
 <exclude-pattern>*/vendor/*</exclude-pattern>
 <rule ref="PSR2">
@@ -414,19 +414,17 @@ Excludes the vendor directory
 Excludes the vendor directory
 -->
 ---
-# What standards are installed
+# What standards are installed?
 ```
 root@3aff108bdba0:/var/www/html# bin/phpcs -i
 The installed coding standards are MySource, PEAR, PSR1, PSR2, PSR12, Squiz, Zend, html and Security
 ```
 
 ---
-# What Rules are installed
+# What rules are installed?
 ```
 root@3aff108bdba0:/var/www/html# bin/phpcs --standard=MySource --generator=text
-```
 
-```
 ---------------------------------------------------
 | MYSOURCE CODING STANDARD: PROPERTY DECLARATIONS |
 ---------------------------------------------------
@@ -444,7 +442,6 @@ within a statement.  The static declaration must come after the visibility decla
 |     private $bar;                              |     private $_bar;                              |
 | }                                              | }                                               |
 ----------------------------------------------------------------------------------------------------
-
 ```
 <!--
 Generator could be markdown
@@ -540,7 +537,7 @@ bar($foo, false);
 ```
 <!-- Example shows PHPCS ignoring sniff -->
 ---
-# What else can PHPCS do
+# What else can PHPCS do?
 
 ---
 
@@ -591,7 +588,7 @@ PHPCS -> PHPStan -> PHPUnit
 <!-- Run PHPCS first as this will require automatic alterations to the code -->
 ---
 
-# One command to rule them all
+# One command
 ```bash
 $ make tests
 ```
