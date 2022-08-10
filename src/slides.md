@@ -309,7 +309,7 @@ The remaining column will list any errors that PHPCBF cannot fix.
 -->
 ---
 
-# What's a ruleset
+# What's a ruleset?
 
 [https://github.com/squizlabs/PHP_CodeSniffer/wiki/Annotated-Ruleset](https://github.com/squizlabs/PHP_CodeSniffer/wiki/Annotated-Ruleset)
 <!--
