@@ -45,7 +45,7 @@ class:
 
 ---
 
-#  1# New / green field projects
+#  1. New / green field projects
 
 <!--
 - Start from scratch, no code (yet)
@@ -58,7 +58,7 @@ class:
 
 ---
 
-# 2# Legacy / brown field projects
+# 2. Legacy / brown field projects
 
 <!--
 - It could have a mixture of code styles
@@ -71,7 +71,7 @@ class:
 
 ---
 
-# 3# Migrations / rebuilds
+# 3. Migrations / rebuilds
 
 <!--
 - Migrating from one code style to another
@@ -152,8 +152,7 @@ Ensure the migration from one code base to another is as smooth as possible.
 
 ---
 
-# #2
-## What are Code Conventions?
+# #2 What are Code Conventions?
 
 ---
 
@@ -642,7 +641,7 @@ bar($foo, false);
 
 ---
 
-# 3 Confidence levels for legacy projects
+# 4# Confidence levels for legacy projects
 
 ---
 
@@ -659,6 +658,12 @@ However lots of files/lines/sniffs have been ignored with no explanation
 - Low confidence level
 
 ---
+
+# 3) PHPCS is not installed
+
+- Very low confidence level
+
+---
 # How do you improve a legacy project?
 <!--
 - Collate all the ignored files, lines and have a meeting with the team to discuss a way forward.
@@ -666,13 +671,6 @@ However lots of files/lines/sniffs have been ignored with no explanation
 - Start very slowly with goal to get better linter over time
 
 -->
----
-
-# 3) PHPCS is not installed
-
-- Very low confidence level
-
-How do you install PHPCS on a legacy project?
 
 ---
 1. Get the buy in of the team.
