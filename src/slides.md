@@ -243,7 +243,9 @@ $ phpcs ~/path/to/file.php
 ```bash
 $ phpcs ~/path/to/directory
 ```
-
+<!--
+A path to a directory or to a single file can be used.
+-->
 ---
 
 # When things go well
@@ -252,6 +254,9 @@ $ phpcs ~/path/to/directory
 root@3aff108bdba0:/var/www/html# bin/phpcs src/MyController.php
 root@3aff108bdba0:/var/www/html#
 ```
+<!--
+If no output is shown then no errors have been recorded.
+-->
 
 ---
 
@@ -270,7 +275,9 @@ PHPCBF CAN FIX THE 1 MARKED SNIFF VIOLATIONS AUTOMATICALLY
 
 Time: 596ms; Memory: 10MB
 ```
-
+<!--
+The report shows the line number, explanation of the error and file path.
+-->
 ---
 
 # Fixing the Sniff Violation
@@ -289,25 +296,29 @@ A TOTAL OF 1 ERROR WERE FIXED IN 1 FILE
 
 Time: 611ms; Memory: 10MB
 ```
-
+<!--
+The remaining column will list any errors that PHPCBF cannot fix.
+-->
 --- 
 
 # What's a sniff?
-
+<!--
 - A sniff is a file checks one part of the coding standard.
 - A coding standard is a collection of sniffs.
 - A coding standard is a directory and a ruleset.xml
 - The default standard is PEAR
+-->
 ---
 
 # What's a ruleset
+
+[https://github.com/squizlabs/PHP_CodeSniffer/wiki/Annotated-Ruleset](https://github.com/squizlabs/PHP_CodeSniffer/wiki/Annotated-Ruleset)
+<!--
 - XML file of that configures the coding standard
 - Can define include and exclude rules
 - Can include output rules
 - Can include sniffs from other rulesets
-
-[More info](https://github.com/squizlabs/PHP_CodeSniffer/wiki/Annotated-Ruleset)
-
+-->
 ---
 # Creating a ruleset
 
@@ -530,6 +541,41 @@ bar($foo, false);
 ```
 <!-- Example shows PHPCS ignoring sniff -->
 ---
+# What else can PHPCS do
+
+---
+
+# PHPCS and Security
+
+```xml
+<rule ref="Security.BadFunctions.Asserts"/>
+<rule ref="Security.BadFunctions.Backticks"/>
+<rule ref="Security.BadFunctions.CallbackFunctions"/>
+<rule ref="Security.BadFunctions.CryptoFunctions"/>
+<rule ref="Security.BadFunctions.EasyRFI"/>
+<rule ref="Security.BadFunctions.EasyXSS"/>
+<rule ref="Security.CVE.20132110"/>
+<rule ref="Security.CVE.20134113"/>
+```
+
+[https://github.com/FloeDesignTechnologies/phpcs-security-audit](https://github.com/FloeDesignTechnologies/phpcs-security-audit)
+
+---
+
+# PHPCS and PHP Compatibility
+
+```xml
+<rule ref="PHPCompatibility"/>
+```
+---
+
+```bash
+phpcs -p ./src --standard=vendor/phpcompatibility/php-compatibility/PHPCompatibility --runtime-set testVersion 8.0
+```
+
+[https://github.com/PHPCompatibility/PHPCompatibility](https://github.com/PHPCompatibility/PHPCompatibility)
+
+---
 
 # #4
 ## How to increase code confidence using PHPCS
@@ -629,42 +675,37 @@ However lots of files/lines/sniffs have been ignored with no explanation
 How do you install PHPCS on a legacy project?
 
 ---
-1. Get the buy in of the team
-2. Choose the standards and run PHPCBF over the code base to fix quick wins
-3. Start to introduce new sniffs and re run PHPCBF over the codebase each time
-5. Put the code formatting changes in a separate branch/pr
-6. Rinse and repeat
+1. Get the buy in of the team.
+2. Choose the standards and run PHPCBF over the code base to fix quick wins.
+3. Document the standards that you are using.
+4. Start to introduce new sniffs and re-run PHPCBF over the codebase each time.
+5. Put the code formatting changes in a separate branch/pr.
+6. Rinse and repeat.
+<!-- 
+In the document include a brief explanation as to why you chose the standard and provide examples.
 
+Give this document to new starters.  
+
+Pin this to slack, email it to the team and make sure everyone agrees.
+
+Make it very obvious.
+-->
 ---
 
-# PHPCS and Security
+# Resources
+[GitHub repo](https://github.com/squizlabs/PHP_CodeSniffer)
 
-```xml
-<rule ref="Security.BadFunctions.Asserts"/>
-<rule ref="Security.BadFunctions.Backticks"/>
-<rule ref="Security.BadFunctions.CallbackFunctions"/>
-<rule ref="Security.BadFunctions.CryptoFunctions"/>
-<rule ref="Security.BadFunctions.EasyRFI"/>
-<rule ref="Security.BadFunctions.EasyXSS"/>
-<rule ref="Security.CVE.20132110"/>
-<rule ref="Security.CVE.20134113"/>
-```
+[Wiki](https://github.com/squizlabs/PHP_CodeSniffer/wiki)
 
-[https://github.com/FloeDesignTechnologies/phpcs-security-audit](https://github.com/FloeDesignTechnologies/phpcs-security-audit)
+[Pear package](https://pear.php.net/package/PHP_CodeSniffer/)
 
----
+[PHPStorm and PHPCS](https://www.jetbrains.com/help/phpstorm/using-php-code-sniffer.html)
 
-# PHPCS and PHP Compatibility
+[VSCode and PHPCS](https://marketplace.visualstudio.com/items?itemName=ikappas.phpcs)
 
-```xml
-<rule ref="PHPCompatibility"/>
-```
+[PHPCompatibility](https://github.com/PHPCompatibility/PHPCompatibility)
 
-```bash
-phpcs -p ./src --standard=vendor/phpcompatibility/php-compatibility/PHPCompatibility --runtime-set testVersion 8.0
-```
-
-[https://github.com/PHPCompatibility/PHPCompatibility](https://github.com/PHPCompatibility/PHPCompatibility)
+[PHP Security Audit](https://github.com/FloeDesignTechnologies/phpcs-security-audit)
 
 ---
 
