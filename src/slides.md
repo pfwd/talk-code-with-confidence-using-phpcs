@@ -9,14 +9,14 @@ size: 16:9
 footer: "Peter Fisher BSc MBCS [howtocodewell.net](https://howtocodewell.net) [@howToCodeWell](https://twitter.com/howtocodewell) [@pfwd](https://twitter.com/pfwd)"
 ---
 
-# Code with confidence using PHPCS
+# Code with confidence using PHP_CodeSniffer
 
 ---
 
 1. What does code confidence mean to me?
 2. What are coding conventions?
-3. How do we install/run/configure PHPCS?
-4. How to increase code confidence using PHPCS?
+3. How do we install/run/configure PHP_CodeSniffer?
+4. How to increase code confidence using PHP_CodeSniffer?
 
 ---
 
@@ -131,10 +131,10 @@ Ensure the migration from one code base to another is as smooth as possible.
 
 ---
 
-# Add PHPCS to your toolbox
+# Add PHP_CodeSniffer to your toolbox
 
 <!--
-- PHPCS is just one of many tools
+- PHP_CodeSniffer is just one of many tools
 - Mess detection
 - Compatibility checks
 - Static analysis
@@ -194,8 +194,6 @@ Switching between conventions is a brain drain.
 ---
 
 # Install via Composer
-
-# Composer
 
 ```bash
 $ composer global require "squizlabs/php_codesniffer=*"
@@ -537,11 +535,11 @@ bar($foo, false);
 ```
 <!-- Example shows PHPCS ignoring sniff -->
 ---
-# What else can PHPCS do?
+# What else can PHP_CodeSniffer do?
 
 ---
 
-# PHPCS and Security
+# Security
 
 ```xml
 <rule ref="Security.BadFunctions.Asserts"/>
@@ -558,7 +556,7 @@ bar($foo, false);
 
 ---
 
-# PHPCS and PHP Compatibility
+# PHP Compatibility
 
 ```xml
 <rule ref="PHPCompatibility"/>
@@ -566,7 +564,23 @@ bar($foo, false);
 ---
 
 ```bash
-phpcs -p ./src --standard=vendor/phpcompatibility/php-compatibility/PHPCompatibility --runtime-set testVersion 8.0
+php -d memory_limit=1024M \
+  phpcs -p ./src \
+  --extensions=php \
+  --warning-severity=8 \
+  --standard=vendor/phpcompatibility/php-compatibility/PHPCompatibility \
+  --runtime-set testVersion 8.1 \
+  --report-full=php_81_report.txt
+```
+
+<!-- 
+- warning-severity is set to 8 so only errors are shown
+- report-full will send the full output to the file
+-->
+
+Count the number of reported files
+```bash
+grep -C "FILE:" php_81_report.txt
 ```
 
 [https://github.com/PHPCompatibility/PHPCompatibility](https://github.com/PHPCompatibility/PHPCompatibility)
@@ -574,7 +588,7 @@ phpcs -p ./src --standard=vendor/phpcompatibility/php-compatibility/PHPCompatibi
 ---
 
 # #4
-## How to increase code confidence using PHPCS
+## How to increase code confidence using PHP_CodeSniffer
 
 --- 
 
@@ -583,7 +597,7 @@ phpcs -p ./src --standard=vendor/phpcompatibility/php-compatibility/PHPCompatibi
 ---
 # Test order is important
 
-PHPCS -> PHPStan -> PHPUnit
+PHP_CodeSniffer -> PHPStan -> PHPUnit
 
 <!-- Run PHPCS first as this will require automatic alterations to the code -->
 ---
@@ -621,7 +635,7 @@ $ composer test
 # Recommendations for legacy projects
 
 <!--
-- Choose to use PHPCS or PHP CS 
+- Choose to use PHP_CodeSniffer or PHP CS 
 - Investigate which conventions are currently in use
 - Get an agreement with the team as to which conventions to use/drop
 - If anything needs to be ignored then write a ticket and add the ticket reference into the comment.
@@ -642,21 +656,21 @@ bar($foo, false);
 
 ---
 
-# 1) PHPCS is already in use. 
+# 1) PHP_CodeSniffer is already in use. 
 
 Any ignored files or lines have been documented with a related ticket in the backlog
 
 - High confidence level
 
 ---
-# 2) PHPCS is installed
+# 2) PHP_CodeSniffer is installed
 However lots of files/lines/sniffs have been ignored with no explanation
 
 - Low confidence level
 
 ---
 
-# 3) PHPCS is not installed
+# 3) PHP_CodeSniffer is not installed
 
 - Very low confidence level
 
