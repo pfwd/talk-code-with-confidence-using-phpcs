@@ -412,38 +412,13 @@ Excludes the vendor directory
 Excludes the vendor directory
 -->
 ---
+
 # What standards are installed?
 ```
 root@3aff108bdba0:/var/www/html# bin/phpcs -i
 The installed coding standards are MySource, PEAR, PSR1, PSR2, PSR12, Squiz, Zend, html and Security
 ```
 
----
-# What rules are installed?
-```
-root@3aff108bdba0:/var/www/html# bin/phpcs --standard=MySource --generator=text
-
----------------------------------------------------
-| MYSOURCE CODING STANDARD: PROPERTY DECLARATIONS |
----------------------------------------------------
-
-Property names should not be prefixed with an underscore to indicate visibility.  Visibility should
-be used to declare properties rather than the var keyword.  Only one property should be declared
-within a statement.  The static declaration must come after the visibility declaration.
-
------------------------------------------ CODE COMPARISON ------------------------------------------
-| Valid: Correct property naming.                | Invalid: An underscore prefix used to indicate  |
-|                                                | visibility.                                     |
-----------------------------------------------------------------------------------------------------
-| class Foo                                      | class Foo                                       |
-| {                                              | {                                               |
-|     private $bar;                              |     private $_bar;                              |
-| }                                              | }                                               |
-----------------------------------------------------------------------------------------------------
-```
-<!--
-Generator could be markdown
--->
 ---
 # Configuration options
 
@@ -587,6 +562,124 @@ grep -C "FILE:" php_81_report.txt
 
 ---
 
+# Useful commands
+
+---
+
+# What rules are installed?
+```
+root@3aff108bdba0:/var/www/html# bin/phpcs --standard=MySource --generator=text
+
+---------------------------------------------------
+| MYSOURCE CODING STANDARD: PROPERTY DECLARATIONS |
+---------------------------------------------------
+
+Property names should not be prefixed with an underscore to indicate visibility.  Visibility should
+be used to declare properties rather than the var keyword.  Only one property should be declared
+within a statement.  The static declaration must come after the visibility declaration.
+
+----------------------------------------- CODE COMPARISON ------------------------------------------
+| Valid: Correct property naming.                | Invalid: An underscore prefix used to indicate  |
+|                                                | visibility.                                     |
+----------------------------------------------------------------------------------------------------
+| class Foo                                      | class Foo                                       |
+| {                                              | {                                               |
+|     private $bar;                              |     private $_bar;                              |
+| }                                              | }                                               |
+----------------------------------------------------------------------------------------------------
+```
+<!--
+Generator could be markdown
+-->
+---
+
+# Report summary
+
+```
+root@480e58f9c392:/var/www/html# ./bin/phpcs --report=summary
+
+PHP CODE SNIFFER REPORT SUMMARY
+--------------------------------------------------------------------------------------
+FILE                                                                  ERRORS  WARNINGS
+--------------------------------------------------------------------------------------
+config/courses/course_docker-for-beginners.php                        3       1
+public/index.php                                                      0       1
+tests/integration/Manager/SubscriptionManagerTest.php                 0       1
+tests/integration/Security/UserProviderTest.php                       0       1
+tests/unit/Repository/PackageRepositoryTest.php                       0       1
+--------------------------------------------------------------------------------------
+A TOTAL OF 3 ERRORS AND 5 WARNINGS WERE FOUND IN 5 FILES
+--------------------------------------------------------------------------------------
+PHPCBF CAN FIX 3 OF THESE SNIFF VIOLATIONS AUTOMATICALLY
+--------------------------------------------------------------------------------------
+```
+<!-- 
+Useful for understanding which files need the most work
+-->
+
+---
+
+# Only show errors
+
+```
+root@480e58f9c392:/var/www/html# ./bin/phpcs --report=summary -n          
+
+PHP CODE SNIFFER REPORT SUMMARY
+----------------------------------------------------------------------
+FILE                                                  ERRORS  WARNINGS
+----------------------------------------------------------------------
+config/courses/course_docker-for-beginners.php          3       0
+----------------------------------------------------------------------
+A TOTAL OF 3 ERRORS AND 0 WARNINGS WERE FOUND IN 1 FILE
+----------------------------------------------------------------------
+PHPCBF CAN FIX 3 OF THESE SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+```
+<!-- 
+Remove the noisy warnings 
+-->
+
+---
+# Interactive
+
+```
+root@480e58f9c392:/var/www/html# ./bin/phpcs -a    
+
+FILE: config/courses/course_docker-for-beginners.php
+----------------------------------------------------------------------
+FOUND 0 ERRORS AND 1 WARNING AFFECTING 1 LINE
+----------------------------------------------------------------------
+ 60 | WARNING | Line exceeds 300 characters; contains 305 characters
+----------------------------------------------------------------------
+
+<ENTER> to recheck, [s] to skip or [q] to quit : 
+```
+<!-- 
+Use this when manually fixing your code
+-->
+---
+
+# Get diffs
+
+```
+root@480e58f9c392:/var/www/html# ./bin/phpcs --report=diff
+--- src/Security/FrontendLoginFormAuthenticator.php
++++ PHP_CodeSniffer
+@@ -39,8 +39,9 @@
+         private UrlGeneratorInterface $urlGenerator,
+         private CsrfTokenManagerInterface $csrfTokenManager,
+         private UserPasswordHasherInterface $passwordHasher,
+-        private SessionFlashes $sessionFlashes)
+-    {}
++        private SessionFlashes $sessionFlashes
++    ) {
++    }
+```
+<!-- 
+Patch files can be created from the output
+-->
+---
+
 # #4
 ## How to increase code confidence using PHP_CodeSniffer
 
@@ -645,11 +738,11 @@ $ composer test
 # Example
 
 ```php
-// phpcs:ignore Squiz.Arrays.ArrayDeclaration.SingleLineNotAllowed [PORT-123]
+// [PORT-123]
+// phpcs:ignore Squiz.Arrays.ArrayDeclaration.SingleLineNotAllowed
 $foo = [1,2,3];
 bar($foo, false);
 ```
-
 ---
 
 # 4# Confidence levels for legacy projects
